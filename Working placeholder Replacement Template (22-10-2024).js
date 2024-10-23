@@ -1,4 +1,4 @@
-<script>
+
   console.log("External script is loaded and running.");
 
   // List of placeholders that should be hidden (by default, empty)
@@ -1045,12 +1045,11 @@
     console.log('DOM fully loaded and parsed.');
     addEventListenersToInputs();
   });
-</script>
 
 
 
 <!-- prevent submission on enter -->
-<script>
+
   // Prevent form submission on pressing Enter in any input field
   document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('wf-form-Contrato-alquiler-vivienda');
@@ -1065,10 +1064,10 @@
       console.error('Form not found!');
     }
   });
-</script>
+
 
 <!-- JavaScript carrousel -->
-<script>
+
 document.addEventListener("DOMContentLoaded", function () {
     const steps = document.querySelectorAll('.form_step');
     const nextButtons = document.querySelectorAll('.is-next');
@@ -1162,10 +1161,10 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
-</script>
+
 
 <!-- Selector Persona Locadora -->
-<script>
+
   document.addEventListener("DOMContentLoaded", function() {
     // Get the select element
     var selectElement = document.getElementById("PersonasLocador");
@@ -1195,10 +1194,10 @@ document.addEventListener("DOMContentLoaded", function () {
     // Initial check in case there's a default value selected
     toggleDivs();
   });
-</script>
+
 
 <!-- Selector Persona Locataria -->
-<script>
+
   document.addEventListener("DOMContentLoaded", function() {
     // Get the select element
     var selectElement = document.getElementById("PersonasLocatario");
@@ -1228,10 +1227,10 @@ document.addEventListener("DOMContentLoaded", function () {
     // Initial check in case there's a default value selected
     toggleDivs();
   });
-</script>
+
 
 <!-- date formatter for numbers of days/motnsh/years -->
-<script>
+
   window.onload = function() {
     // Number to Spanish words map
     const numberWords = {
@@ -1280,10 +1279,10 @@ document.addEventListener("DOMContentLoaded", function () {
     // Listen for changes in the 'term-type' field and call formatNumber
     document.getElementById('term-type').addEventListener('change', formatNumber);
   };
-</script>
+
 
 <!-- date formatter for starting day -->
-<script>
+
   document.addEventListener("DOMContentLoaded", function() {
     var forwardDateInput = document.getElementById("custom-start-date");
     var formattedForwardDateInput = document.getElementById("formatted-forward-date");
@@ -1323,11 +1322,11 @@ document.addEventListener("DOMContentLoaded", function () {
       formatCustomForwardDate();
     });
   });
-</script>
+
 
 
 <!-- Selector Dates & calculation of termination date -->
-<script>
+
   document.addEventListener("DOMContentLoaded", function() {
     // Get the elements from the form
     var termTypeElement = document.getElementById("term-type");
@@ -1413,10 +1412,10 @@ document.addEventListener("DOMContentLoaded", function () {
     // Initial calculation
     calculateTerminationDate();
   });
-</script>
+
 
 <!-- formatter canonDePagoLocacion -->
-<script>
+
   window.onload = function() {
     // Number-to-words map extended for larger numbers (thousands and millions)
     const numberWords = {
@@ -1490,10 +1489,10 @@ document.addEventListener("DOMContentLoaded", function () {
       formatCanonDePagoLocacion(); // Ensure the latest value is formatted
     });
   };
-</script>
+
 
 <!-- date formatter for signature day -->
-<script>
+
   document.addEventListener("DOMContentLoaded", function() {
     var signatureDateInput = document.getElementById("custom-signature-date");
     var formattedSignatureDateInput = document.getElementById("formattedNumber");
@@ -1559,11 +1558,11 @@ document.addEventListener("DOMContentLoaded", function () {
       formatCustomSignatureDate();
     });
   });
-</script>
+
 
 <!-- Selector estado civil -->
 
-<script>
+
   document.addEventListener("DOMContentLoaded", function() {
     
     // Function to show/hide the "nupcias" div based on the selected value of a given pair of elements
@@ -1608,4 +1607,4 @@ document.addEventListener("DOMContentLoaded", function () {
     toggleNupciasDiv("estadocivilGarantePF3", "nupciasGarante3");
 
   });
-</script>
+
