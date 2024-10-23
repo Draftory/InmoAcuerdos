@@ -1,4 +1,6 @@
 <script>
+  console.log("External script is loaded and running.");
+
   // List of placeholders that should be hidden (by default, empty)
   const hiddenPlaceholders = ['nupciasLocadorPF1', 'conyugeLocadorPF1'];
 
