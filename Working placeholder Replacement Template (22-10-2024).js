@@ -1,4 +1,4 @@
-<script>
+
   console.log("External script is loaded and running.");
 
   // List of placeholders that should be hidden (by default, empty)
@@ -1045,4 +1045,3 @@
     console.log('DOM fully loaded and parsed.');
     addEventListenersToInputs();
   });
-</script>
