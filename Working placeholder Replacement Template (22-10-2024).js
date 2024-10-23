@@ -1,4 +1,4 @@
-
+<script>
   console.log("External script is loaded and running.");
 
   // List of placeholders that should be hidden (by default, empty)
@@ -1045,3 +1045,567 @@
     console.log('DOM fully loaded and parsed.');
     addEventListenersToInputs();
   });
+</script>
+
+
+
+<!-- prevent submission on enter -->
+<script>
+  // Prevent form submission on pressing Enter in any input field
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('wf-form-Contrato-alquiler-vivienda');
+    
+    if (form) {
+      form.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+          event.preventDefault(); // Prevent the default form submission
+        }
+      });
+    } else {
+      console.error('Form not found!');
+    }
+  });
+</script>
+
+<!-- JavaScript carrousel -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const steps = document.querySelectorAll('.form_step');
+    const nextButtons = document.querySelectorAll('.is-next');
+    const prevButtons = document.querySelectorAll('.is-prev');
+    const submitButton = document.querySelector('.uui-button.is-submit');
+    const progressBarInner = document.querySelector('.progress_bar-inner');
+    const messageElement = document.querySelector('.h5.message');
+    let currentStep = 0;
+
+    // Function to scroll to the top of the page
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // Smooth scroll animation
+        });
+    }
+
+    // Function to show the current step
+    function showStep(step) {
+        steps.forEach((stepElement, index) => {
+            stepElement.style.display = (index === step) ? 'flex' : 'none';
+        });
+
+        // Show/Hide navigation buttons
+        if (step === steps.length - 1) {
+            nextButtons.forEach(button => button.style.display = 'none');
+            prevButtons.forEach(button => button.style.display = 'flex');
+            submitButton.style.display = 'block';
+        } else {
+            nextButtons.forEach(button => button.style.display = 'flex');
+            prevButtons.forEach(button => button.style.display = (step > 0) ? 'flex' : 'none');
+            submitButton.style.display = 'none';
+        }
+
+        // Update progress bar
+        const progressPercentage = ((step + 1) / steps.length) * 100;
+        progressBarInner.style.width = `${progressPercentage}%`;
+
+        // Scroll to top after showing the step
+        scrollToTop();
+    }
+
+    // Function to validate required fields
+    function validateStep(step) {
+        const inputs = steps[step].querySelectorAll('input[required], select[required], textarea[required]');
+        let valid = true;
+
+        inputs.forEach(input => {
+            if (input.type === 'radio') {
+                const radioGroup = steps[step].querySelectorAll(`input[name="${input.name}"]`);
+                const checked = Array.from(radioGroup).some(radio => radio.checked);
+                if (!checked) {
+                    valid = false;
+                }
+            } else if (!input.value) {
+                valid = false;
+            }
+        });
+
+        if (!valid) {
+            messageElement.textContent = "Por favor completar los campos obligatorios.";
+        } else {
+            messageElement.textContent = "";
+        }
+
+        return valid;
+    }
+
+    // Show initial step
+    showStep(currentStep);
+
+    // Add event listeners to the next buttons
+    nextButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            if (validateStep(currentStep)) {
+                if (currentStep < steps.length - 1) {
+                    currentStep++;
+                    showStep(currentStep);
+                }
+            }
+        });
+    });
+
+    // Add event listeners to the previous buttons
+    prevButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            if (currentStep > 0) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        });
+    });
+});
+</script>
+
+<!-- Selector Persona Locadora -->
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Get the select element
+    var selectElement = document.getElementById("PersonasLocador");
+
+    // Function to show/hide the correct divs based on the selected value
+    function toggleDivs() {
+      // First, hide all the divs
+      document.getElementById("Locadora-1-persona").style.display = "none";
+      document.getElementById("Locadora-2-persona").style.display = "none";
+      document.getElementById("Locadora-3-persona").style.display = "none";
+      document.getElementById("Locadora-4-persona").style.display = "none";
+      document.getElementById("Locadora-5-persona").style.display = "none";
+
+      // Get the selected number of people
+      var selectedValue = selectElement.value;
+      var numPeople = parseInt(selectedValue.charAt(0)); // Get the number (1-5)
+
+      // Show the divs based on the number of people selected
+      for (var i = 1; i <= numPeople; i++) {
+        document.getElementById("Locadora-" + i + "-persona").style.display = "block";
+      }
+    }
+
+    // Attach the change event listener to the select element
+    selectElement.addEventListener("change", toggleDivs);
+
+    // Initial check in case there's a default value selected
+    toggleDivs();
+  });
+</script>
+
+<!-- Selector Persona Locataria -->
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Get the select element
+    var selectElement = document.getElementById("PersonasLocatario");
+
+    // Function to show/hide the correct divs based on the selected value
+    function toggleDivs() {
+      // First, hide all the divs
+      document.getElementById("Locataria-1-persona").style.display = "none";
+      document.getElementById("Locataria-2-persona").style.display = "none";
+      document.getElementById("Locataria-3-persona").style.display = "none";
+      document.getElementById("Locataria-4-persona").style.display = "none";
+      document.getElementById("Locataria-5-persona").style.display = "none";
+
+      // Get the selected number of people
+      var selectedValue = selectElement.value;
+      var numPeople = parseInt(selectedValue.charAt(0)); // Get the number (1-5)
+
+      // Show the divs based on the number of people selected
+      for (var i = 1; i <= numPeople; i++) {
+        document.getElementById("Locataria-" + i + "-persona").style.display = "block";
+      }
+    }
+
+    // Attach the change event listener to the select element
+    selectElement.addEventListener("change", toggleDivs);
+
+    // Initial check in case there's a default value selected
+    toggleDivs();
+  });
+</script>
+
+<!-- date formatter for numbers of days/motnsh/years -->
+<script>
+  window.onload = function() {
+    // Number to Spanish words map
+    const numberWords = {
+      0: 'Cero', 1: 'Uno', 2: 'Dos', 3: 'Tres', 4: 'Cuatro', 5: 'Cinco', 6: 'Seis', 
+      7: 'Siete', 8: 'Ocho', 9: 'Nueve', 10: 'Diez', 11: 'Once', 12: 'Doce', 13: 'Trece', 
+      14: 'Catorce', 15: 'Quince', 16: 'Dieciséis', 17: 'Diecisiete', 18: 'Dieciocho', 
+      19: 'Diecinueve', 20: 'Veinte', 21: 'Veintiuno', 22: 'Veintidós', 23: 'Veintitrés', 
+      24: 'Veinticuatro', 25: 'Veinticinco', 26: 'Veintiséis', 27: 'Veintisiete', 
+      28: 'Veintiocho', 29: 'Veintinueve', 30: 'Treinta', 31: 'Treinta y uno', 
+      32: 'Treinta y dos', 33: 'Treinta y tres', 34: 'Treinta y cuatro', 
+      35: 'Treinta y cinco', 36: 'Treinta y seis', 37: 'Treinta y siete', 
+      38: 'Treinta y ocho', 39: 'Treinta y nueve', 40: 'Cuarenta', 
+      41: 'Cuarenta y uno', 42: 'Cuarenta y dos', 43: 'Cuarenta y tres', 
+      44: 'Cuarenta y cuatro', 45: 'Cuarenta y cinco', 46: 'Cuarenta y seis', 
+      47: 'Cuarenta y siete', 48: 'Cuarenta y ocho'
+    };
+
+    function formatNumber() {
+      const inputField = document.getElementById('term-value');
+      const termTypeField = document.getElementById('term-type');
+      const outputField = document.getElementById('formatted-output');
+      const hiddenField = document.getElementById('formatted-number-hidden');
+
+      // Get the user's number input and parse it
+      const number = parseInt(inputField.value, 10);
+
+      // Get the selected term type (Días, Meses, Años) directly from the select value
+      const termType = termTypeField.options[termTypeField.selectedIndex].text;
+
+      // Check if the number is valid and within the defined range
+      if (!isNaN(number) && numberWords[number]) {
+        const formattedNumber = `${numberWords[number]} (${number}) ${termType}`;
+        
+        // Update the visible output and hidden input
+        outputField.textContent = formattedNumber;
+        hiddenField.value = formattedNumber;
+      } else {
+        outputField.textContent = 'Número fuera de rango';
+        hiddenField.value = '';
+      }
+    }
+
+    // Listen for input changes in the 'term-value' field and call formatNumber
+    document.getElementById('term-value').addEventListener('input', formatNumber);
+
+    // Listen for changes in the 'term-type' field and call formatNumber
+    document.getElementById('term-type').addEventListener('change', formatNumber);
+  };
+</script>
+
+<!-- date formatter for starting day -->
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var forwardDateInput = document.getElementById("custom-start-date");
+    var formattedForwardDateInput = document.getElementById("formatted-forward-date");
+
+    // Array of months in Spanish
+    var monthsInSpanish = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+
+    // Function to format the date in the Spanish format (dd de MMMM de yyyy)
+    function formatDateInSpanish(date) {
+      var day = date.getDate().toString().padStart(2, '0'); // Add leading zero if needed
+      var month = monthsInSpanish[date.getMonth()]; // Get the month in Spanish
+      var year = date.getFullYear(); // Get the year
+      return `${day} de ${month} de ${year}`;
+    }
+
+    // Function to format the custom forward date
+    function formatCustomForwardDate() {
+      var inputDate = new Date(forwardDateInput.value); // Get the date from input
+
+      // Check if the date is valid
+      if (!isNaN(inputDate)) {
+        var formattedDate = formatDateInSpanish(inputDate); // Format date in Spanish
+        formattedForwardDateInput.value = formattedDate; // Set the formatted date to the hidden input
+      }
+    }
+
+    // Format date whenever the user selects a new date
+    forwardDateInput.addEventListener("change", formatCustomForwardDate);
+
+    // Format date initially if the form has a pre-filled date
+    if (forwardDateInput.value) {
+      formatCustomForwardDate();
+    }
+
+    // Format date before form submission to ensure it's up to date
+    document.getElementById("Contrato-alquiler-vivienda").addEventListener("submit", function(event) {
+      formatCustomForwardDate();
+    });
+  });
+</script>
+
+
+<!-- Selector Dates & calculation of termination date -->
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Get the elements from the form
+    var termTypeElement = document.getElementById("term-type");
+    var termValueElement = document.getElementById("term-value");
+    var startDateSelector = document.getElementById("start-date-selector");
+    var customStartDateDiv = document.getElementById("Fecha-inicio-locacion-vivienda"); // Parent div
+    var terminationDateElement = document.getElementById("termination-date");
+    var terminationDateInput = document.getElementById("termination-date-input");
+
+    // Array of months in Spanish
+    var monthsInSpanish = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+
+    // Function to format the date in the Spanish format (dd de MMMM de yyyy)
+    function formatDateInSpanish(date) {
+      var day = date.getDate().toString().padStart(2, '0'); // Add leading zero if needed
+      var month = monthsInSpanish[date.getMonth()]; // Get the month in Spanish
+      var year = date.getFullYear(); // Get the year
+      return `${day} de ${month} de ${year}`;
+    }
+
+    // Function to add the term (days, months, or years) to the start date
+    function addTermToDate(startDate, termValue, termType, subtractDay) {
+      var endDate = new Date(startDate);
+
+      if (termType === "days") {
+        endDate.setDate(endDate.getDate() + parseInt(termValue));
+      } else if (termType === "months") {
+        endDate.setMonth(endDate.getMonth() + parseInt(termValue));
+      } else if (termType === "years") {
+        endDate.setFullYear(endDate.getFullYear() + parseInt(termValue));
+      }
+
+      // Subtract one day only if needed
+      if (subtractDay) {
+        endDate.setDate(endDate.getDate() - 1);
+      }
+
+      return endDate;
+    }
+
+    // Function to calculate the termination date
+    function calculateTerminationDate() {
+      var termType = termTypeElement.value;
+      var termValue = termValueElement.value;
+      var startDate;
+      var subtractDay = false;
+
+      if (startDateSelector.value === "día de la fecha") {
+        startDate = new Date(); // Today's date
+        subtractDay = true; // Subtract one day for signature date
+      } else if (startDateSelector.value === "día") {
+        startDate = new Date(document.getElementById("custom-start-date").value); // Custom date from input
+      }
+
+      // If we have a start date and term value, calculate the termination date
+      if (startDate && termValue) {
+        var terminationDate = addTermToDate(startDate, termValue, termType, subtractDay);
+        var formattedDate = formatDateInSpanish(terminationDate); // Format date in Spanish
+
+        // Show the calculated termination date in the div
+        terminationDateElement.innerText = "Fecha de terminación: " + formattedDate;
+
+        // Set the value of the hidden input (formatted in Spanish)
+        terminationDateInput.value = formattedDate;
+      }
+    }
+
+    // Show/hide the custom start date div based on the selection
+    startDateSelector.addEventListener("change", function() {
+      if (startDateSelector.value === "día") {
+        customStartDateDiv.style.display = "flex";
+      } else {
+        customStartDateDiv.style.display = "none";
+      }
+      calculateTerminationDate(); // Recalculate when the selector changes
+    });
+
+    // Attach event listeners to recalculate the termination date when inputs change
+    termTypeElement.addEventListener("change", calculateTerminationDate);
+    termValueElement.addEventListener("input", calculateTerminationDate);
+    document.getElementById("custom-start-date").addEventListener("input", calculateTerminationDate);
+
+    // Initial calculation
+    calculateTerminationDate();
+  });
+</script>
+
+<!-- formatter canonDePagoLocacion -->
+<script>
+  window.onload = function() {
+    // Number-to-words map extended for larger numbers (thousands and millions)
+    const numberWords = {
+      0: 'Cero', 1: 'Uno', 2: 'Dos', 3: 'Tres', 4: 'Cuatro', 5: 'Cinco', 6: 'Seis', 
+      7: 'Siete', 8: 'Ocho', 9: 'Nueve', 10: 'Diez', 11: 'Once', 12: 'Doce', 
+      13: 'Trece', 14: 'Catorce', 15: 'Quince', 16: 'Dieciséis', 17: 'Diecisiete', 
+      18: 'Dieciocho', 19: 'Diecinueve', 20: 'Veinte', 30: 'Treinta', 40: 'Cuarenta', 
+      50: 'Cincuenta', 60: 'Sesenta', 70: 'Setenta', 80: 'Ochenta', 90: 'Noventa', 
+      100: 'Cien', 200: 'Doscientos', 300: 'Trescientos', 400: 'Cuatrocientos', 
+      500: 'Quinientos', 600: 'Seiscientos', 700: 'Setecientos', 800: 'Ochocientos', 
+      900: 'Novecientos', 1000: 'Mil'
+    };
+
+    // Function to convert a number into Spanish words
+    function numberToWords(num) {
+      if (num <= 20) return numberWords[num]; // Simple lookup for numbers up to 20
+      if (num < 100) { // Handle tens
+        let tens = Math.floor(num / 10) * 10;
+        let units = num % 10;
+        return units === 0 ? numberWords[tens] : `${numberWords[tens]} y ${numberWords[units]}`;
+      }
+      if (num < 1000) { // Handle hundreds
+        let hundreds = Math.floor(num / 100) * 100;
+        let remainder = num % 100;
+        return remainder === 0 ? numberWords[hundreds] : `${numberWords[hundreds]} ${numberToWords(remainder)}`;
+      }
+      if (num < 1000000) { // Handle thousands
+        let thousands = Math.floor(num / 1000);
+        let remainder = num % 1000;
+        let thousandsWord = thousands === 1 ? 'Mil' : `${numberToWords(thousands)} mil`;
+        return remainder === 0 ? thousandsWord : `${thousandsWord} ${numberToWords(remainder)}`;
+      }
+      if (num >= 1000000) { // Handle millions
+        let millions = Math.floor(num / 1000000);
+        let remainder = num % 1000000;
+        let millionsWord = millions === 1 ? 'Un millón' : `${numberToWords(millions)} millones`;
+        return remainder === 0 ? millionsWord : `${millionsWord} ${numberToWords(remainder)}`;
+      }
+      return ''; // Return empty string for unhandled cases
+    }
+
+    // Function to format the canon de pago locacion value and send it to the backend
+    function formatCanonDePagoLocacion() {
+      const inputField = document.getElementById('canonDePagoLocacion');
+      const hiddenField = document.getElementById('formatted-canon-hidden');
+
+      // Get the user's input and parse it as a number
+      const number = parseInt(inputField.value, 10);
+
+      if (!isNaN(number)) {
+        // Convert the number to words
+        const numberInWords = numberToWords(number);
+
+        // Create the formatted string to send to the backend (only the words)
+        const formattedCanon = `${numberInWords}`;
+
+        // Set the hidden input field with the formatted canon to send via form
+        hiddenField.value = formattedCanon;
+        console.log('Formatted canon de pago:', formattedCanon); // For debugging purposes
+      } else {
+        hiddenField.value = '';
+        console.log('Invalid number input:', inputField.value); // For debugging purposes
+      }
+    }
+
+    // Listen for changes in the 'canonDePagoLocacion' input field
+    document.getElementById('canonDePagoLocacion').addEventListener('input', formatCanonDePagoLocacion);
+
+    // Listen for form submission to ensure the formatted value is updated before sending
+    document.getElementById('canon-form').addEventListener('submit', function(event) {
+      formatCanonDePagoLocacion(); // Ensure the latest value is formatted
+    });
+  };
+</script>
+
+<!-- date formatter for signature day -->
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var signatureDateInput = document.getElementById("custom-signature-date");
+    var formattedSignatureDateInput = document.getElementById("formattedNumber");
+    var signatureDateDisplay = document.getElementById("signature-date");
+    var startDateSelector = document.getElementById("signature-date-selector"); // Selector for today/next
+    var customStartDateDiv = document.getElementById("Fecha-firma-locacion-vivienda"); // Div to show/hide
+
+    // Array of months in Spanish
+    var monthsInSpanish = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+
+    // Function to format the date in the Spanish format (dd de MMMM de yyyy)
+    function formatDateInSpanish(date) {
+      var day = date.getDate().toString().padStart(2, '0'); // Add leading zero if needed
+      var month = monthsInSpanish[date.getMonth()]; // Get the month in Spanish
+      var year = date.getFullYear(); // Get the year
+      return `${day} de ${month} de ${year}`;
+    }
+
+    // Function to handle showing/hiding and date formatting based on selection
+    function handleSignatureDateChange() {
+      if (startDateSelector.value === "today") {
+        customStartDateDiv.style.display = "none"; // Hide the custom date input
+        var today = new Date(); // Get the current date
+        var formattedToday = formatDateInSpanish(today); // Format today's date in Spanish
+
+        // Update the signature date div and the hidden input with today's date
+        signatureDateDisplay.innerHTML = formattedToday;
+        formattedSignatureDateInput.value = formattedToday;
+
+      } else if (startDateSelector.value === "next") {
+        customStartDateDiv.style.display = "block"; // Show the custom date input
+      } else {
+        customStartDateDiv.style.display = "none"; // Hide for other values
+        signatureDateDisplay.innerHTML = ''; // Clear the signature date div
+        formattedSignatureDateInput.value = ''; // Clear the hidden input
+      }
+    }
+
+    // Function to format the custom signature date
+    function formatCustomSignatureDate() {
+      var inputDateValue = signatureDateInput.value; // Get the date from input
+      if (inputDateValue) {
+        var inputDate = new Date(inputDateValue + 'T00:00:00'); // Create a new date object, avoid timezone issues
+        var formattedDate = formatDateInSpanish(inputDate); // Format date in Spanish
+        formattedSignatureDateInput.value = formattedDate; // Set the formatted date to the hidden input
+        signatureDateDisplay.innerHTML = formattedDate; // Display the formatted date in the div
+      } else {
+        signatureDateDisplay.innerHTML = ''; // Clear the div if date is invalid
+      }
+    }
+
+    // Format date whenever the user selects a new date
+    signatureDateInput.addEventListener("change", formatCustomSignatureDate);
+
+    // Trigger date change functionality on page load
+    handleSignatureDateChange();
+
+    // Listen for changes in the date selector (today/next)
+    startDateSelector.addEventListener("change", handleSignatureDateChange);
+
+    // Format date before form submission to ensure it's up to date
+    document.getElementById("Contrato-alquiler-vivienda").addEventListener("submit", function(event) {
+      formatCustomSignatureDate();
+    });
+  });
+</script>
+
+<!-- Selector estado civil -->
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // Function to show/hide the "nupcias" div based on the selected value of a given pair of elements
+    function toggleNupciasDiv(estadoCivilId, nupciasId) {
+      var estadoCivilElement = document.getElementById(estadoCivilId);
+      var nupciasDiv = document.getElementById(nupciasId);
+
+      // Function to show/hide the nupcias div based on the selected value
+      function updateNupciasVisibility() {
+        var selectedEstadoCivil = estadoCivilElement.value;
+        if (selectedEstadoCivil === 'casado/a') {
+          nupciasDiv.style.display = "block";
+        } else {
+          nupciasDiv.style.display = "none";
+        }
+      }
+
+      // Attach the change event listener to the estado civil select element
+      estadoCivilElement.addEventListener("change", updateNupciasVisibility);
+
+      // Initial check to hide/show the div on page load based on the default value
+      updateNupciasVisibility();
+    }
+
+    // Locador: Call the toggleNupciasDiv function for each pair of Locador elements (up to 5)
+    toggleNupciasDiv("estadocivilLocadorPF1", "nupciasLocador1");
+    toggleNupciasDiv("estadocivilLocadorPF2", "nupciasLocador2");
+    toggleNupciasDiv("estadocivilLocadorPF3", "nupciasLocador3");
+    toggleNupciasDiv("estadocivilLocadorPF4", "nupciasLocador4");
+    toggleNupciasDiv("estadocivilLocadorPF5", "nupciasLocador5");
+
+    // Locatario: Call the toggleNupciasDiv function for each pair of Locatario elements (up to 5)
+    toggleNupciasDiv("estadocivilLocatarioPF1", "nupciasLocatario1");
+    toggleNupciasDiv("estadocivilLocatarioPF2", "nupciasLocatario2");
+    toggleNupciasDiv("estadocivilLocatarioPF3", "nupciasLocatario3");
+    toggleNupciasDiv("estadocivilLocatarioPF4", "nupciasLocatario4");
+    toggleNupciasDiv("estadocivilLocatarioPF5", "nupciasLocatario5");
+
+    // Garante: Call the toggleNupciasDiv function for each pair of Garante elements (up to 3)
+    toggleNupciasDiv("estadocivilGarantePF1", "nupciasGarante1");
+    toggleNupciasDiv("estadocivilGarantePF2", "nupciasGarante2");
+    toggleNupciasDiv("estadocivilGarantePF3", "nupciasGarante3");
+
+  });
+</script>
